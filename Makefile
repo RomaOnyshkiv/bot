@@ -2,7 +2,7 @@ APP=$(shell basename $(shell git remote get-url origin))
 REGISTRY=onyshkir
 VERSION=$(shell git describe --tags)-$(shell git rev-parse --short HEAD)
 TARGETOS=linux
-TARGETARCH=arm64
+TARGETARCH=amd64
 
 format:
 	gofmt -s -w ./
@@ -16,7 +16,7 @@ test:
 get:
 	go get
 
-build: format
+build: format get
 	CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -v -o bot -ldflags "-X="github.com/romaonyshkiv/bot/cmd.appVersion=${VERSION}
 
 image:
