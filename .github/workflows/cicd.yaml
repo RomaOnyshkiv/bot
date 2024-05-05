@@ -14,4 +14,10 @@ jobs:
       - name: Run Test
         run: make test 
 
+      - name: Docker Hub login
+        uses: docker/login-actions@v2
+        with:
+          username: ${{ secrets.DOOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOOCKERHUB_TOKEN }}
+
     
