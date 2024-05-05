@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Run Test
         run: make test 
@@ -19,5 +21,12 @@ jobs:
         with:
           username: ${{ secrets.DOOCKERHUB_USERNAME }}
           password: ${{ secrets.DOOCKERHUB_TOKEN }}
+      
+      - name: build&Push
+        env:
+          APP: "bot"
+          REGISTRY: ${{ secrets.DOOCKERHUB_USERNAME }}
+        run: make image push
+
 
     
