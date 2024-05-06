@@ -26,10 +26,11 @@ jobs:
         run: make test 
 
       - name: Docker Hub login
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.GIT_USER }}
-          password: ${{ secrets.GIT_TOKEN }}
+        run: docker login ghcr.io -u ${{ secrets.GIT_USER }} -p ${{ secrets.GIT_TOKEN }}
+        # uses: docker/login-action@v2
+        # with:
+        #   username: ${{ secrets.GIT_USER }}
+        #   password: ${{ secrets.GIT_TOKEN }}
           # username: ${{ secrets.DOOCKERHUB_USERNAME }}
           # password: ${{ secrets.DOOCKERHUB_TOKEN }}
       
