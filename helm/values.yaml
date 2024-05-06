@@ -8,6 +8,8 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: "v1.0.2-2c6092a"
   arch: amd64
+  os: "linux"
+  registry: "ghcr.io"
 secret:
   name: bot
   tokenKey: token

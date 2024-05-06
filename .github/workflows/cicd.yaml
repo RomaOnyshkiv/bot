@@ -1,6 +1,15 @@
 name: BOT-CICD
 
-on: push
+on:
+  push:
+    branches:
+      - 'develop'
+
+env:
+  TARGETARCH: amd64
+  TARGETOS: linux
+  REGISTRY: ghcr.io
+  APP: "bot"
 
 jobs:
   ci:
@@ -42,7 +51,7 @@ jobs:
 
       - uses: mikefarah/yq@master
         with:
-          cmd: yq -i '.image.tag=strenv(VERSION)' helm/values.yaml
+          cmd: yq -i '.image.tag=strenv(VERSION) | .image.arch=strenv(TARGETARCH) | .image.os=strenv(TARGETOS) | .image.registry=strenv(REGISTRY)' helm/values.yaml
 
       - run: |
           git config user.name github-actions
