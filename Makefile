@@ -13,10 +13,10 @@ lint:
 test:
 	go test -v
 
-get:
+goget:
 	go get
 
-build: format get
+build: format
 	CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -v -o bot -ldflags "-X="github.com/romaonyshkiv/bot/cmd.appVersion=${VERSION}
 
 image:
