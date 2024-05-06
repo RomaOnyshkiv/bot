@@ -28,8 +28,10 @@ jobs:
       - name: Docker Hub login
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOOCKERHUB_TOKEN }}
+          username: ${{ secrets.GIT_USER }}
+          password: ${{ secrets.GIT_TOKEN }}
+          # username: ${{ secrets.DOOCKERHUB_USERNAME }}
+          # password: ${{ secrets.DOOCKERHUB_TOKEN }}
       
       - name: Build
         run: make image REGISTRY=$REGISTRY/romaonyshkiv
