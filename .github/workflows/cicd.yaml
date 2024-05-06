@@ -9,7 +9,8 @@ env:
   TARGETARCH: amd64
   TARGETOS: linux
   REGISTRY: ghcr.io
-  APP: "bot"
+  APP: bot
+  TELE_TOKEN: ${{ secrets.TELE_TOKEN }}
 
 jobs:
   ci:
