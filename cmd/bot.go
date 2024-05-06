@@ -39,7 +39,7 @@ to quickly create a Cobra application.`,
 		})
 
 		if err != nil {
-			log.Fatalf("Error %s", err)
+			log.Fatalf("Error, check TELE_TOKEN %s", err)
 			return
 		}
 
