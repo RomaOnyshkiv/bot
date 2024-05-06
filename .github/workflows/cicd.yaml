@@ -31,11 +31,17 @@ jobs:
           username: ${{ secrets.DOOCKERHUB_USERNAME }}
           password: ${{ secrets.DOOCKERHUB_TOKEN }}
       
-      - name: build&Push
-        env:
-          APP: "bot"
-          REGISTRY: ${{ secrets.DOOCKERHUB_USERNAME }}
-        run: make image push
+      - name: Build
+        run: cat .env && make image REGISTRY=$REGISTRY/${{ github.repository_owner }}
+
+      - name: Push
+        run: make push REGISTRY=$REGISTRY/${{ github.repository_owner }}
+
+      # - name: build&Push
+      #   env:
+      #     APP: "bot"
+      #     REGISTRY: ${{ secrets.DOOCKERHUB_USERNAME }}
+      #   run: make image push
 
   cd:
     name: CD
