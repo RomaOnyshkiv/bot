@@ -11,6 +11,6 @@ image:
   os: "linux"
   registry: "ghcr.io"
 secret:
-  name: bot
-  tokenKey: token
-  tokenName: TELE_TOKEN
+  name: "bot"
+  env: "TELE_TOKEN"
+  key: "token"
