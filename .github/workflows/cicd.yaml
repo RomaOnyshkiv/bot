@@ -32,7 +32,7 @@ jobs:
           password: ${{ secrets.DOOCKERHUB_TOKEN }}
       
       - name: Build
-        run: cat .env && make image REGISTRY=$REGISTRY/${{ github.repository_owner }}
+        run: make image REGISTRY=$REGISTRY/${{ github.repository_owner }}
 
       - name: Push
         run: make push REGISTRY=$REGISTRY/${{ github.repository_owner }}
