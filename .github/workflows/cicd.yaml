@@ -28,6 +28,13 @@ jobs:
 
       - name: Docker Hub login
         run: docker login ghcr.io -u ${{ secrets.GIT_USER }} -p ${{ secrets.GIT_TOKEN }}
+
+      - name: Make env
+        uses: SpicyPizza/create-envfile@v2.0
+        with:
+          file_name: .env
+          fail_on_empty: false
+          sort_keys: false
         # uses: docker/login-action@v2
         # with:
         #   username: ${{ secrets.GIT_USER }}
@@ -36,7 +43,7 @@ jobs:
           # password: ${{ secrets.DOOCKERHUB_TOKEN }}
       
       - name: Build
-        run: make image REGISTRY=$REGISTRY/romaonyshkiv
+        run: cat .env && make image REGISTRY=$REGISTRY/romaonyshkiv
 
       - name: Push
         run: make push REGISTRY=$REGISTRY/romaonyshkiv
