@@ -6,7 +6,7 @@ replicaCount: 1
 image:
   repository: onyshkir
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v1.0.2-20a0f20"
+  tag: "v1.0.2-969406d"
   arch: amd64
   os: "linux"
   registry: "ghcr.io"
