@@ -13,14 +13,14 @@ lint:
 test:
 	go test -v
 
-get:
+goget:
 	go get
 
-build: format get
+build: format
 	CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -v -o bot -ldflags "-X="github.com/romaonyshkiv/bot/cmd.appVersion=${VERSION}
 
 image:
-	docker build . -t ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH} --build-arg TARGETARCH=${TARGETARCH}
+	docker build  --platform ${TARGETOS}/${TARGETARCH} . -t ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH}
 
 push:
 	docker push ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH}

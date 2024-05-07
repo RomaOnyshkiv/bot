@@ -9,7 +9,8 @@ env:
   TARGETARCH: amd64
   TARGETOS: linux
   REGISTRY: ghcr.io
-  APP: "bot"
+  APP: bot
+  TELE_TOKEN: ${{ secrets.TELE_TOKEN }}
 
 jobs:
   ci:
@@ -26,16 +27,36 @@ jobs:
         run: make test 
 
       - name: Docker Hub login
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOOCKERHUB_TOKEN }}
+          registry: ghcr.io
+          username: ${{ secrets.GIT_USER }}
+          password: ${{ secrets.GIT_TOKEN }}
+
+      - name: Make env
+        uses: SpicyPizza/create-envfile@v2.0
+        with:
+          file_name: .env
+          fail_on_empty: false
+          sort_keys: false
+        # uses: docker/login-action@v2
+        # with:
+        #   username: ${{ secrets.GIT_USER }}
+        #   password: ${{ secrets.GIT_TOKEN }}
+          # username: ${{ secrets.DOOCKERHUB_USERNAME }}
+          # password: ${{ secrets.DOOCKERHUB_TOKEN }}
       
-      - name: build&Push
-        env:
-          APP: "bot"
-          REGISTRY: ${{ secrets.DOOCKERHUB_USERNAME }}
-        run: make image push
+      - name: Build
+        run: cat .env && make image REGISTRY=$REGISTRY/romaonyshkiv
+
+      - name: Push
+        run: make push REGISTRY=$REGISTRY/romaonyshkiv
+
+      # - name: build&Push
+      #   env:
+      #     APP: "bot"
+      #     REGISTRY: ${{ secrets.DOOCKERHUB_USERNAME }}
+      #   run: make image push
 
   cd:
     name: CD
@@ -51,7 +72,7 @@ jobs:
 
       - uses: mikefarah/yq@master
         with:
-          cmd: yq -i '.image.tag=strenv(VERSION) | .image.arch=strenv(TARGETARCH) | .image.os=strenv(TARGETOS) | .image.registry=strenv(REGISTRY)' helm/values.yaml
+          cmd: yq -i '.image.tag=strenv(VERSION)' helm/values.yaml
 
       - run: |
           git config user.name github-actions

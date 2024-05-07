@@ -5,8 +5,8 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/joho/godotenv"
 	"log"
-	"os"
 	"time"
 
 	"github.com/spf13/cobra"
@@ -14,7 +14,8 @@ import (
 )
 
 var (
-	TeleToken = os.Getenv("TELE_TOKEN")
+	envFile, _ = godotenv.Read(".env")
+	TeleToken  = envFile["TELE_TOKEN"]
 )
 
 // botCmd represents the bot command
@@ -39,7 +40,7 @@ to quickly create a Cobra application.`,
 		})
 
 		if err != nil {
-			log.Fatalf("Error %s", err)
+			log.Fatalf("Error, check TELE_TOKEN %s", err)
 			return
 		}
 
@@ -51,7 +52,7 @@ to quickly create a Cobra application.`,
 			case "hello":
 				err = m.Send(fmt.Sprintf("Hello, I'm bot %s", appVersion))
 			case "info":
-				err = m.Send(fmt.Sprintf("Here you can get all info"))
+				err = m.Send(fmt.Printf("Here you can get all info"))
 
 			}
 
