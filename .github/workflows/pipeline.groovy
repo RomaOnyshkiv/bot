@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    node {
+        label 'github'
+    }
     parameters {
 
         choice(name: 'OS', choices: ['linux', 'darwin', 'windows'], description: 'Pick OS')
