@@ -18,15 +18,33 @@ pipeline {
             }
         }
 
+        stage("build") {
+            steps {
+                echo "BUILD PROJECT"
+                sh "make build TARGETOS=${OS} TARGETARCH=${arch}"
+            }
+        }
 
         stage('create image') {
             steps {
                 script {
-                    sh 'make image'
+                    sh "make image TARGETOS=${OS} TARGETARCH=${arch}"
                 }
 
             }
         }
+
+        stage("push") {
+            steps {
+                script {
+                    docker.withRegistry("", "dockerhub") {
+                        sh "make push"
+                    }
+                }
+            }
+        }
+
+
 
         
     }

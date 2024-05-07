@@ -1,8 +1,8 @@
 APP := $(shell basename $(shell git remote get-url origin))
 REGISTRY=onyshkir
 VERSION=$(shell git describe --tags)-$(shell git rev-parse --short HEAD)
-TARGETOS=linux
-TARGETARCH=amd64
+TARGETOS?=linux
+TARGETARCH?=amd64
 
 format:
 	gofmt -s -w ./
