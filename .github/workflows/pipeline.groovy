@@ -1,5 +1,5 @@
 pipeline {
-    node {
+    agent {
         label 'github'
     }
     parameters {
