@@ -5,9 +5,9 @@
 replicaCount: 1
 image:
   registry: "ghcr.io"
-  repository: romaonyshkiv/bot
+  repository: "romaonyshkiv/bot"
   tag: "v1.0.2-d011627"
-  os: "linux"
+  os: linux
   arch: amd64
 secret:
   name: "bot"
