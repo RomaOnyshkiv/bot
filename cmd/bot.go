@@ -5,9 +5,9 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/joho/godotenv"
 	"log"
 	"time"
-	"github.com/joho/godotenv"
 
 	"github.com/spf13/cobra"
 	telebot "gopkg.in/telebot.v3"
@@ -15,7 +15,7 @@ import (
 
 var (
 	envFile, _ = godotenv.Read(".env")
-	TeleToken = envFile["TELE_TOKEN"]
+	TeleToken  = envFile["TELE_TOKEN"]
 )
 
 // botCmd represents the bot command
