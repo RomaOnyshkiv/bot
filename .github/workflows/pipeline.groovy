@@ -5,7 +5,7 @@ pipeline {
     parameters {
 
         choice(name: 'OS', choices: ['linux', 'darwin', 'windows'], description: 'Pick OS')
-        choice(name: 'arch', choices: ['arm46', 'amd64'], description: 'Select arch')
+        choice(name: 'arch', choices: ['arm64', 'amd64'], description: 'Select arch')
 
     }
     stages {
