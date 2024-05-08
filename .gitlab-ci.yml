@@ -1,11 +1,8 @@
 variables:
   TARGETARCH: amd64
   TARGETOS: linux
-  REGISTRY: registry.gitlab.com
   APP: "bot"
-  CI_TOKEN: $CI_JOB_TOKEN
   TELE_TOKEN: $TELE_TOKEN
-  FILE_PATH: helm/values.yaml
 
 stages:
   - test
@@ -30,6 +27,11 @@ build:
 img:
   stage: img
   image: docker:latest
+  services:
+    - docker:dind
+  before_script:
+    - apt-get update && apt-get install -y make
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   script:
     - make image
   
@@ -39,6 +41,7 @@ push:
   services:
     - docker:dind
   before_script:
+    - apt-get update && apt-get install -y make 
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   script:
     - make push
