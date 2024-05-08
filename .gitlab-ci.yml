@@ -15,18 +15,14 @@ stages:
 
 test:
   stage: test
-  image: ubuntu:latest
-  services:
-    - docker:dind
+  image: golang:latest
   script:
     - make test
+  only:
+    - main
 
 build:
   stage: build
-  image: ubuntu:latest
-  services:
-    - docker:dind
+  image: golang:latest
   script:
-    - echo TELE_TOKEN=$TELE_TOKEN >> .env
-    - echo $REGISTRY_TOKEN | docker login ghcr.io -u $REGISTRY_USERNAME --password-stdin
-    - cat .env && make image REGISTRY=$REGISTRY/$REGISTRY_USERNAME
+    - make build
