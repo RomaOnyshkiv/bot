@@ -22,7 +22,13 @@ build:
   image: ubuntu:latest
   services:
     - docker:dind
+  before_script:
+    - apt-get update && apt-get install -y curl
+    - curl -fsSL https://get.docker.com -o get-docker.sh
+    - sh get-docker.sh
+    - apt-get install -y docker-ce docker-ce-cli containerd.io
   script:
+    - docker info
     - echo TELE_TOKEN=$TELE_TOKEN >> .env
     - echo $REGISTRY_TOKEN | docker login ghcr.io -u $REGISTRY_USERNAME --password-stdin
     - cat .env && make image REGISTRY=$REGISTRY/$REGISTRY_USERNAME
