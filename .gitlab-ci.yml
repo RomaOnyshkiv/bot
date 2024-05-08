@@ -1,14 +1,13 @@
 variables:
   TARGETARCH: amd64
   TARGETOS: linux
+  REGISTRY: ghcr.io
   APP: "bot"
   TELE_TOKEN: $TELE_TOKEN
 
 stages:
   - test
   - build
-  - img
-  - push
 
 test:
   stage: test
@@ -20,28 +19,11 @@ test:
 
 build:
   stage: build
-  image: golang:latest
-  script:
-    - make build
-
-img:
-  stage: img
-  image: docker:latest
+  image: ubuntu:latest
   services:
     - docker:dind
-  before_script:
-    - apt-get update && apt-get install -y make
-    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   script:
-    - make image
-  
-push:
-  stage: push
-  image: docker:latest
-  services:
-    - docker:dind
-  before_script:
-    - apt-get update && apt-get install -y make 
-    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  script:
-    - make push
+    - echo TELE_TOKEN=$TELE_TOKEN >> .env
+    - echo $REGISTRY_TOKEN | docker login ghcr.io -u $REGISTRY_USERNAME --password-stdin
+    - cat .env && make image REGISTRY=$REGISTRY/$REGISTRY_USERNAME
+    - make push REGISTRY=$REGISTRY/$REGISTRY_USERNAME
