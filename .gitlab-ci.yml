@@ -1,0 +1,32 @@
+variables:
+  TARGETARCH: amd64
+  TARGETOS: linux
+  REGISTRY: registry.gitlab.com
+  APP: "bot"
+  CI_TOKEN: $CI_JOB_TOKEN
+  TELE_TOKEN: $TELE_TOKEN
+  REGISTRY_TOKEN: $REGISTRY_TOKEN
+  REGISTRY_USERNAME: $REGISTRY_USERNAME
+  FILE_PATH: helm/values.yaml
+
+stages:
+  - test
+  - build
+
+test:
+  stage: test
+  image: ubuntu:latest
+  services:
+    - docker:dind
+  script:
+    - make test
+
+build:
+  stage: build
+  image: ubuntu:latest
+  services:
+    - docker:dind
+  script:
+    - echo TELE_TOKEN=$TELE_TOKEN >> .env
+    - echo $REGISTRY_TOKEN | docker login ghcr.io -u $REGISTRY_USERNAME --password-stdin
+    - cat .env && make image REGISTRY=$REGISTRY/$REGISTRY_USERNAME
