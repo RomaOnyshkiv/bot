@@ -26,3 +26,5 @@ build:
   image: golang:latest
   script:
     - make build
+  
+  
