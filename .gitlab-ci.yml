@@ -27,6 +27,7 @@ build:
     - curl -fsSL https://get.docker.com -o get-docker.sh
     - sh get-docker.sh
     - apt-get install -y docker-ce docker-ce-cli containerd.io
+    - apt-get update && apt-get install -y make
   script:
     - echo TELE_TOKEN=$TELE_TOKEN >> .env
     - echo $REGISTRY_TOKEN | docker login ghcr.io -u $REGISTRY_USERNAME --password-stdin
