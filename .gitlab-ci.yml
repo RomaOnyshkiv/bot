@@ -12,6 +12,8 @@ variables:
 stages:
   - test
   - build
+  - img
+  - push
 
 test:
   stage: test
@@ -26,5 +28,17 @@ build:
   image: golang:latest
   script:
     - make build
+
+img:
+  stage: img
+  image: golang:latest
+  script:
+    - make image
   
-  
+push:
+  stage: push
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - make push
