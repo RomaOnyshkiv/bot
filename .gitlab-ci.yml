@@ -28,7 +28,6 @@ build:
     - sh get-docker.sh
     - apt-get install -y docker-ce docker-ce-cli containerd.io
     - apt-get update && apt-get install -y make
-    - systemctl start docker
     - sudo groupadd docker
     - sudo gpasswd -a $USER docker
   script:
