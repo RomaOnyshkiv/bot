@@ -26,7 +26,7 @@ build:
     - echo $DOCKER_TOKEN | docker login registry.gitlab.com -u $REGISTRY_USER --password-stdin 
   script:
     - VERSION=$(git describe --tags --abbrev=0 --always)
-    - docker build  --platform ${TARGETOS}/${TARGETARCH} . -t ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH}
-    - docker push ${REGISTRY}/homeproject5/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH} 
+    - docker build  --platform ${TARGETOS}/${TARGETARCH} . -t ${REGISTRY}/romaony/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH}
+    - docker push ${REGISTRY}/romaony/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH} 
   only:
     - main
