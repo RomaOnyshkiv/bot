@@ -19,19 +19,14 @@ test:
 
 build:
   stage: build
-  image: ubuntu:latest
+  image: docker:20.10.7-git
   services:
     - docker:dind
   before_script:
-    - apt-get update && apt-get install -y curl
-    - curl -fsSL https://get.docker.com -o get-docker.sh
-    - sh get-docker.sh
-    - apt-get install -y docker-ce docker-ce-cli containerd.io
-    - apt-get update && apt-get install -y make
-    - sudo groupadd docker
-    - sudo gpasswd -a $USER docker
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   script:
-    - echo TELE_TOKEN=$TELE_TOKEN >> .env
-    - echo $REGISTRY_TOKEN | docker login ghcr.io -u $REGISTRY_USERNAME --password-stdin
-    - cat .env && make image REGISTRY=$REGISTRY/$REGISTRY_USERNAME
-    - make push REGISTRY=$REGISTRY/$REGISTRY_USERNAME
+    - VERSION=$(git describe --tags)-$(git rev-parse --short HEAD)
+    - docker build  --platform ${TARGETOS}/${TARGETARCH} . -t ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH}
+    - docker push ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH} 
+  only:
+    - main
