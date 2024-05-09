@@ -23,7 +23,7 @@ build:
   services:
     - docker:dind
   before_script:
-    - docker login $(REGISTRY)
+    - docker login ${REGISTRY}
   script:
     - VERSION=$(git describe --tags --abbrev=0 --always)
     - docker build  --platform ${TARGETOS}/${TARGETARCH} . -t ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH}
