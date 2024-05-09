@@ -27,6 +27,6 @@ build:
   script:
     - VERSION=$(git describe --tags --abbrev=0 --always)
     - docker build  --platform ${TARGETOS}/${TARGETARCH} . -t ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH}
-    - docker push ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH} 
+    - docker push ${REGISTRY}/homeproject5/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH} 
   only:
     - main
