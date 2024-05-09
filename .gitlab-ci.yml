@@ -23,7 +23,7 @@ build:
   services:
     - docker:dind
   before_script:
-    - docker login ${REGISTRY}
+    - echo $DOCKER_TOKEN | docker login registry.gitlab.com -u $REGISTRY_USER --password-stdin 
   script:
     - VERSION=$(git describe --tags --abbrev=0 --always)
     - docker build  --platform ${TARGETOS}/${TARGETARCH} . -t ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH}
