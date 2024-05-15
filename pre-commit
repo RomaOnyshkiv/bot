@@ -1,0 +1,7 @@
+case "$(uname -s)" in
+       Darwin)
+         brew install pre-commit -y && pre-commit --version && pre-commit install ;;
+       Linux)
+         apt update && apt install pre-commit -y && pre-commit --version && pre-commit install ;;
+       *)
+esac
